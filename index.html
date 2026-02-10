@@ -1060,6 +1060,13 @@
             const totalDosePerHour = dose * weight * drug.conversionFactor;
             
             const results = drug.concentrations.map(conc => {
+                let actualConc = conc.value;
+                if (drug.unit.includes('mcg') && conc.unit.includes('mg')) {
+                    actualConc = conc.value * 1000;
+                }
+                else if (drug.unit.includes('mg') && conc.unit.includes('mcg')) {
+                    actualConc = conc.value / 1000;
+                }
                 const rate = totalDosePerHour / conc.value;
                 return {
                     concentration: conc.value,
