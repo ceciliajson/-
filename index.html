@@ -1067,7 +1067,7 @@
                 else if (drug.unit.includes('mg') && conc.unit.includes('mcg')) {
                     actualConc = conc.value / 1000;
                 }
-                const rate = totalDosePerHour / conc.value;
+                const rate = totalDosePerHour / actualConc;
                 return {
                     concentration: conc.value,
                     unit: conc.unit,
