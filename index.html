@@ -178,7 +178,11 @@
         .selected-drug-info.color-red {
             background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
         }
-
+        
+        .seletec-drug-info.color-orange {
+            background: linear-gradient(135deg, #fff2eb 0%, #ffe1cd 100%);
+        }   
+        
         .selected-drug-info.color-yellow {
             background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
         }
@@ -483,7 +487,7 @@
             <div class="subtitle">소아중환자실 약물 투여 안전을 위한 도구</div>
             <div class="notice">
                 본 프로그램은 참고용으로 사용해주세요.<br>
-                최종 투약 전에는 의료인의 확인이 필요합니다.
+                실제 투약 전에는 의료인의 확인이 필요합니다.
             </div>
         </header>
 
@@ -608,7 +612,7 @@
     </div>
 
     <script>
-        const ADMIN_PASSWORD = "picu2025";
+        const ADMIN_PASSWORD = "picu2026";
 
         // 약물 데이터베이스
         const defaultDrugData = {
@@ -628,18 +632,18 @@
                     color: "red",
                     compatibleFluids: "D5W, D5S, N/S",
                     precautions: "",
-                    dosageInfo: "IV Bolus (CPR 용량): 0.01mg/kg(10mcg/kg) ivs, 3~5분 마다 0.1mg/mL (1:10000 solution) (Epi 1@ + N/S 9mL)\nCIV: 0.05~1mcg/kg/min\nIM: anaphylatic shock 시 0.01mg/kg IM"
+                    dosageInfo: "IV Bolus (CPR 용량): 0.01mg/kg(10mcg/kg) ivs\n3~5분 마다 0.1mg/mL (1:10000 solution) (Epi 1@ + N/S 9mL)\nCIV: 0.05~1mcg/kg/min\nIM: anaphylatic shock 시 0.01mg/kg IM"
                 },
                 {
                     name: "Dopamine",
                     unit: "mcg/kg/min",
                     doseRange: [2, 20],
                     concentrations: [
-                        { value: 0.2, unit: "mg/mL" },
-                        { value: 0.4, unit: "mg/mL" },
-                        { value: 0.8, unit: "mg/mL" },
-                        { value: 1.6, unit: "mg/mL" },
-                        { value: 3.2, unit: "mg/mL" }
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2, unit: "mg/mL" },
+                        { value: 4, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" },
+                        { value: 10, unit: "mg/mL" }
                     ],
                     conversionFactor: 60,
                     color: "yellow",
@@ -652,11 +656,11 @@
                     unit: "mcg/kg/min",
                     doseRange: [0.5, 20],
                     concentrations: [
-                        { value: 0.25, unit: "mg/mL" },
-                        { value: 0.5, unit: "mg/mL" },
                         { value: 1, unit: "mg/mL" },
-                        { value: 2.5, unit: "mg/mL" },
-                        { value: 5, unit: "mg/mL" }
+                        { value: 2, unit: "mg/mL" },
+                        { value: 4, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" },
+                        { value: 10, unit: "mg/mL" }
                     ],
                     conversionFactor: 60,
                     color: "",
@@ -669,14 +673,14 @@
                     unit: "mcg/kg/min",
                     doseRange: [0.05, 2],
                     concentrations: [
-                        { value: 4, unit: "mcg/mL" },
-                        { value: 8, unit: "mcg/mL" },
-                        { value: 16, unit: "mcg/mL" },
-                        { value: 32, unit: "mcg/mL" },
-                        { value: 64, unit: "mcg/mL" }
+                        { value: 10, unit: "mcg/mL" },
+                        { value: 20, unit: "mcg/mL" },
+                        { value: 40, unit: "mcg/mL" },
+                        { value: 60, unit: "mcg/mL" },
+                        { value: 80, unit: "mcg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "pink",
+                    color: "red",
                     compatibleFluids: "D5W, D5S",
                     precautions: "",
                     dosageInfo: "CIV: 0.05~2mcg/kg/min"
@@ -706,7 +710,7 @@
                         { value: 0.5, unit: "mg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "purple",
+                    color: "red",
                     compatibleFluids: "D5W, NS",
                     precautions: "",
                     dosageInfo: "IV Bolus: 30mcg/kg (max. 2mg)\nCIV: 0.5~3mcg/kg/min (max. 4~5mcg/kg/min)"
@@ -719,10 +723,10 @@
                         { value: 0.4, unit: "mcg/mL" },
                         { value: 4, unit: "mcg/mL" },
                         { value: 20, unit: "mcg/mL" },
-                        { value: 64, unit: "mcg/mL" }
+                        { value: 60, unit: "mcg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "",
+                    color: "orange",
                     compatibleFluids: "D5W, NS",
                     precautions: "",
                     dosageInfo: "CIV: 0.05~2mcg/kg/min"
@@ -748,12 +752,12 @@
                     unit: "mcg/kg/min",
                     doseRange: [0.3, 4],
                     concentrations: [
-                        { value: 50, unit: "mcg/mL" },
-                        { value: 100, unit: "mcg/mL" },
-                        { value: 200, unit: "mcg/mL" }
+                        { value: 0.1, unit: "mcg/mL" },
+                        { value: 0.2, unit: "mcg/mL" },
+                        { value: 0.5, unit: "mcg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "green",
+                    color: "blue",
                     compatibleFluids: "D5W",
                     precautions: "차광",
                     dosageInfo: "CIV: 0.3~4mcg/kg/min (max. 10mcg/kg/min)"
@@ -781,7 +785,7 @@
                     concentrations: [
                         { value: 1, unit: "mg/mL" },
                         { value: 2, unit: "mg/mL" },
-                        { value: 4, unit: "mg/mL" },
+                        { value: 3, unit: "mg/mL" },
                         { value: 6, unit: "mg/mL" }
                     ],
                     conversionFactor: 60,
@@ -812,12 +816,14 @@
                     unit: "mg/kg/hr",
                     doseRange: [0.06, 0.12],
                     concentrations: [
-                        { value: 0.5, unit: "mg/mL" },
                         { value: 1, unit: "mg/mL" },
-                        { value: 2, unit: "mg/mL" }
+                        { value: 2, unit: "mg/mL" },
+                        { value: 3, unit: "mg/mL" },
+                        { value: 4, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" }
                     ],
                     conversionFactor: 1,
-                    color: "blue",
+                    color: "green",
                     compatibleFluids: "D5W, N/S",
                     precautions: "Heparin, pantoprazol과 금지",
                     dosageInfo: "(Sedation) loading 0.05~0.2mg/kg, CIV 0.06~0.12mg/kg/hr"
@@ -833,19 +839,20 @@
                         { value: 5, unit: "mg/mL" }
                     ],
                     conversionFactor: 1,
-                    color: "blue",
+                    color: "green",
                     compatibleFluids: "D5W, N/S",
-                    precautions: "Heparin, pantoprazol과 금지",
-                    dosageInfo: "(Status epilepticus) loading 0.2mg/kg, CIV 0.05~2mg/kg/hr (max. 10mcg/kg/min)"
+                    precautions: "Heparin, Pantoprazol과 금지",
+                    dosageInfo: "(Status epilepticus) loading 0.2mg/kg\nCIV 0.05~2mg/kg/hr (max. 10mcg/kg/min)"
                 },
                 {
                     name: "Propofol (ICU Sedation)",
-                    unit: "mg/kg/hr",
-                    doseRange: [1, 4],
+                    unit: "mcg/kg/min",
+                    doseRange: [5, 60],
                     concentrations: [
                         { value: 2, unit: "mg/mL" },
                         { value: 5, unit: "mg/mL" },
-                        { value: 10, unit: "mg/mL" }
+                        { value: 10, unit: "mg/mL" },
+                        { value: 20, unit: "mg/mL" }
                     ],
                     conversionFactor: 1,
                     color: "",
@@ -892,7 +899,7 @@
                         { value: 2, unit: "mg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "blue",
+                    color: "pink",
                     compatibleFluids: "D5W, N/S",
                     precautions: "냉장, 차광 보관\nDiazepam, morphine과 투여 금지",
                     dosageInfo: "IV bolus: 0.5~2mg/kg\nIM: 3~7mg/kg\nCIV: 5~20mcg/kg/min"
@@ -905,7 +912,7 @@
                         { value: 4, unit: "mcg/mL" }
                     ],
                     conversionFactor: 1,
-                    color: "blue",
+                    color: "orange",
                     compatibleFluids: "N/S, D5W",
                     precautions: "Ceftriaxone과 투여 시 불안정",
                     dosageInfo: "loading: 1.5~2mcg/kg(ov10~20min)\nCIV: 0.5~1.5mcg/kg/hr"
@@ -921,7 +928,7 @@
                         { value: 250, unit: "mcg/mL" }
                     ],
                     conversionFactor: 60,
-                    color: "blue",
+                    color: "pink",
                     compatibleFluids: "WFI, D5W, N/S",
                     precautions: "혈액제제와 병용 금지",
                     dosageInfo: "IV bolus: 0.4~1mcg/kg\nCIV: 0.05~0.5mcg/kg/min"
