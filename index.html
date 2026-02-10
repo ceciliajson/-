@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삐약삐약🐣</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        header h1 {
+            font-size: 56px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        header .beta {
+            font-size: 17px;
+            font-style: italic;
+            color: #86868b;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        header .subtitle {
+            font-size: 21px;
+            color: #1d1d1f;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        header .notice {
+            display: inline-block;
+            background: #f5f5f7;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #515154;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #1d1d1f;
+            border-radius: 10px;
+        }
+
+        .tab:hover {
+            background: #f5f5f7;
+        }
+
+        .tab.active {
+            background: #0066CC;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.25);
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .drug-select {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 17px;
+            font-weight: 400;
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+            background: #fbfbfd;
+            cursor: pointer;
+            transition: all 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231d1d1f' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 44px;
+        }
+
+        .drug-select:hover {
+            border-color: #0066CC;
+        }
+
+        .drug-select:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .selected-drug-info {
+            margin-top: 16px;
+            padding: 20px;
+            background: #f5f5f7;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .selected-drug-info.active {
+            display: block;
+        }
+
+        .selected-drug-info h4 {
+            font-size: 19px;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .selected-drug-info p {
+            font-size: 15px;
+            color: #515154;
+        }
+
+        .selected-drug-info.color-red {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        }
+
+        .selected-drug-info.color-yellow {
+            background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+        }
+
+        .selected-drug-info.color-purple {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+        }
+
+        .selected-drug-info.color-green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .selected-drug-info.color-pink {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+        }
+
+        .selected-drug-info.color-blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 120px 1fr 100px;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            font-weight: 500;
+            font-size: 17px;
+            color: #1d1d1f;
+        }
+
+        .input-group input {
+            padding: 16px 20px;
+            font-size: 28px;
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 400;
+            background: #fbfbfd;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .input-group span {
+            font-size: 17px;
+            font-weight: 400;
+            color: #86868b;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            background: #0066CC;
+            color: white;
+            padding: 20px 24px;
+            border-radius: 12px 12px 0 0;
+            font-weight: 600;
+            font-size: 21px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #d2d2d7;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+
+        .results-table th {
+            background: #f5f5f7;
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 15px;
+            color: #1d1d1f;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        .results-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f5f5f7;
+            font-size: 17px;
+            color: #1d1d1f;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tr:hover {
+            background: #fbfbfd;
+        }
+
+        .recommended {
+            background: #d1f4e0 !important;
+        }
+
+        .recommended-badge {
+            display: inline-block;
+            background: #34c759;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .warning {
+            background: #fff3cd !important;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f5f5f7;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #515154;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #1d1d1f;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #86868b;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-state p {
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .setting-section {
+            padding: 32px;
+            background: #f5f5f7;
+            border-radius: 16px;
+        }
+
+        .setting-section h3 {
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .google-form-box {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: white;
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+        }
+
+        .google-form-box h4 {
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .google-form-box p {
+            color: #515154;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .google-form-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #0066CC;
+            color: white;
+            text-decoration: none;
+            border-radius: 980px;
+            font-weight: 500;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+
+        .google-form-link:hover {
+            background: #0055b3;
+            transform: scale(1.02);
+        }
+
+        .password-prompt input {
+            width: 100%;
+            max-width: 300px;
+            padding: 14px 18px;
+            font-size: 17px;
+            border: 1px solid #d2d2d7;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            background: white;
+        }
+
+        .password-prompt input:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .password-prompt button,
+        .setting-section button {
+            padding: 12px 24px;
+            background: #0066CC;
+            color: white;
+            border: none;
+            border-radius: 980px;
+            font-weight: 500;
+            font-size: 17px;
+            cursor: pointer;
+            margin-right: 12px;
+            transition: all 0.3s;
+        }
+
+        .password-prompt button:hover,
+        .setting-section button:hover {
+            background: #0055b3;
+            transform: scale(1.02);
+        }
+
+        .setting-section textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            border: 1px solid #d2d2d7;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            background: white;
+            resize: vertical;
+        }
+
+        .setting-section textarea:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 40px;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>삐약삐약🐣</h1>
+            <div class="beta">Beta ver.</div>
+            <div class="subtitle">소아중환자실 약물 투여 안전을 위한 도구</div>
+            <div class="notice">
+                본 프로그램은 참고용으로 사용해주세요.<br>
+                최종 투약 전에는 의료인의 확인이 필요합니다.
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('cardiovascular')">심혈관계 약물</button>
+            <button class="tab" onclick="switchTab('sedation')">진정 약물</button>
+            <button class="tab" onclick="switchTab('settings')">약물 관리</button>
+        </div>
+
+        <div class="content">
+            <!-- 심혈관계 약물 -->
+            <div id="cardiovascular-content" class="tab-content">
+                <div class="section">
+                    <div class="section-title">약물 선택</div>
+                    <select id="cardiovascular-select" class="drug-select" onchange="selectDrugFromDropdown('cardiovascular')">
+                        <option value="">약물을 선택하세요</option>
+                    </select>
+                    <div id="cardiovascular-info" class="selected-drug-info"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">환자 체중</div>
+                    <div class="input-group">
+                        <label>체중</label>
+                        <input type="number" id="cardiovascular-weight" placeholder="0.0" step="0.1" min="0.1">
+                        <span>kg</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">처방 용량</div>
+                    <div class="input-group">
+                        <label>용량</label>
+                        <input type="number" id="cardiovascular-dose" placeholder="0.00" step="0.01" min="0">
+                        <span id="cardiovascular-unit">단위</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">계산 결과</div>
+                    <div class="results-section" id="cardiovascular-results">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12h6m-3-3v6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p>약물을 선택하고 체중과 용량을 입력하면<br>계산 결과가 표시됩니다</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 진정 약물 -->
+            <div id="sedation-content" class="tab-content" style="display: none;">
+                <div class="section">
+                    <div class="section-title">약물 선택</div>
+                    <select id="sedation-select" class="drug-select" onchange="selectDrugFromDropdown('sedation')">
+                        <option value="">약물을 선택하세요</option>
+                    </select>
+                    <div id="sedation-info" class="selected-drug-info"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">환자 체중</div>
+                    <div class="input-group">
+                        <label>체중</label>
+                        <input type="number" id="sedation-weight" placeholder="0.0" step="0.1" min="0.1">
+                        <span>kg</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">처방 용량</div>
+                    <div class="input-group">
+                        <label>용량</label>
+                        <input type="number" id="sedation-dose" placeholder="0.00" step="0.01" min="0">
+                        <span id="sedation-unit">단위</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">계산 결과</div>
+                    <div class="results-section" id="sedation-results">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12h6m-3-3v6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p>약물을 선택하고 체중과 용량을 입력하면<br>계산 결과가 표시됩니다</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 약물 관리 -->
+            <div id="settings-content" class="tab-content" style="display: none;">
+                <div class="setting-section">
+                    <h3>💊 약물 데이터 편집</h3>
+                    
+                    <div class="google-form-box">
+                        <h4>📝 약물 추가 요청 및 의견 제출</h4>
+                        <p>추가하고 싶은 약물이나 프로그램 개선 의견이 있으시면 아래 링크를 통해 제출해주세요.</p>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHtXn0xgdJVcCZW-1jXxae_Ng2z5MmRH2W1kmSJ0taWk6fQA/viewform?usp=header" target="_blank" class="google-form-link">
+                            구글 폼으로 이동하기
+                        </a>
+                    </div>
+                    
+                    <div class="password-prompt" id="password-section">
+                        <p style="margin-bottom: 16px; color: #515154; font-size: 15px;">
+                            관리자 전용 영역입니다. 비밀번호를 입력하세요.
+                        </p>
+                        <input type="password" id="admin-password" placeholder="비밀번호">
+                        <button onclick="checkPassword()">확인</button>
+                    </div>
+                    
+                    <div id="editor-section" class="hidden">
+                        <p style="margin-bottom: 20px; color: #515154; font-size: 15px;">
+                            아래 JSON 데이터를 수정하여 약물을 추가하거나 변경할 수 있습니다.
+                        </p>
+                        <textarea id="drug-data-editor"></textarea>
+                        <button onclick="saveDrugData()">💾 저장</button>
+                        <button onclick="resetDrugData()">🔄 초기화</button>
+                        <button onclick="exportData()">📥 내보내기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "picu2025";
+
+        // 약물 데이터베이스
+        const defaultDrugData = {
+            cardiovascular: [
+                {
+                    name: "Epinephrine",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.05, 1],
+                    concentrations: [
+                        { value: 10, unit: "mcg/mL" },
+                        { value: 20, unit: "mcg/mL" },
+                        { value: 40, unit: "mcg/mL" },
+                        { value: 60, unit: "mcg/mL" },
+                        { value: 80, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "red",
+                    compatibleFluids: "D5W, D5S, N/S",
+                    precautions: "",
+                    dosageInfo: "IV Bolus (CPR 용량): 0.01mg/kg(10mcg/kg) ivs, 3~5분 마다 0.1mg/mL (1:10000 solution) (Epi 1@ + N/S 9mL)\nCIV: 0.05~1mcg/kg/min\nIM: anaphylatic shock 시 0.01mg/kg IM"
+                },
+                {
+                    name: "Dopamine",
+                    unit: "mcg/kg/min",
+                    doseRange: [2, 20],
+                    concentrations: [
+                        { value: 0.2, unit: "mg/mL" },
+                        { value: 0.4, unit: "mg/mL" },
+                        { value: 0.8, unit: "mg/mL" },
+                        { value: 1.6, unit: "mg/mL" },
+                        { value: 3.2, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "yellow",
+                    compatibleFluids: "D5W, D5S, N/S",
+                    precautions: "",
+                    dosageInfo: "CIV: 2~20mcg/kg/min"
+                },
+                {
+                    name: "Dobutamine",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.5, 20],
+                    concentrations: [
+                        { value: 0.25, unit: "mg/mL" },
+                        { value: 0.5, unit: "mg/mL" },
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2.5, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "initial: 0.5-1mcg/kg/min\nmaintenance: 2~20mcg/kg/min"
+                },
+                {
+                    name: "Norepinephrine",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.05, 2],
+                    concentrations: [
+                        { value: 4, unit: "mcg/mL" },
+                        { value: 8, unit: "mcg/mL" },
+                        { value: 16, unit: "mcg/mL" },
+                        { value: 32, unit: "mcg/mL" },
+                        { value: 64, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "pink",
+                    compatibleFluids: "D5W, D5S",
+                    precautions: "",
+                    dosageInfo: "CIV: 0.05~2mcg/kg/min"
+                },
+                {
+                    name: "Milrinone",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.25, 0.75],
+                    concentrations: [
+                        { value: 0.1, unit: "mg/mL" },
+                        { value: 0.2, unit: "mg/mL" },
+                        { value: 0.4, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "purple",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "Loading: 50~75mcg/kg (ov 10~60min)\nCIV: 0.25~0.75mcg/kg/min"
+                },
+                {
+                    name: "Nicardipine",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.5, 3],
+                    concentrations: [
+                        { value: 0.1, unit: "mg/mL" },
+                        { value: 0.2, unit: "mg/mL" },
+                        { value: 0.5, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "purple",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "IV Bolus: 30mcg/kg (max. 2mg)\nCIV: 0.5~3mcg/kg/min (max. 4~5mcg/kg/min)"
+                },
+                {
+                    name: "Isoproterenol",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.05, 2],
+                    concentrations: [
+                        { value: 0.4, unit: "mcg/mL" },
+                        { value: 4, unit: "mcg/mL" },
+                        { value: 20, unit: "mcg/mL" },
+                        { value: 64, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "CIV: 0.05~2mcg/kg/min"
+                },
+                {
+                    name: "Nitroglycerin",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.25, 5],
+                    concentrations: [
+                        { value: 0.05, unit: "mg/mL" },
+                        { value: 0.1, unit: "mg/mL" },
+                        { value: 0.2, unit: "mg/mL" },
+                        { value: 0.4, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "green",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "CIV: infant, children) 0.25~5mcg/kg/min (max. 10mcg/kg/min)\nAdolescent) 5~10mcg/min (max. 200mcg/min)"
+                },
+                {
+                    name: "Nitroprusside",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.3, 4],
+                    concentrations: [
+                        { value: 50, unit: "mcg/mL" },
+                        { value: 100, unit: "mcg/mL" },
+                        { value: 200, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "green",
+                    compatibleFluids: "D5W",
+                    precautions: "차광",
+                    dosageInfo: "CIV: 0.3~4mcg/kg/min (max. 10mcg/kg/min)"
+                },
+                {
+                    name: "Vasopressin",
+                    unit: "unit/kg/min",
+                    doseRange: [0.0003, 0.002],
+                    concentrations: [
+                        { value: 0.1, unit: "unit/mL" },
+                        { value: 0.2, unit: "unit/mL" },
+                        { value: 0.5, unit: "unit/mL" },
+                        { value: 1, unit: "unit/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "",
+                    compatibleFluids: "D5W, NS",
+                    precautions: "",
+                    dosageInfo: "(Adult) CIV 0.2~0.4unit/min\n(Infant, Children) CIV: 0.0003~0.002unit/kg/min"
+                },
+                {
+                    name: "Amiodarone",
+                    unit: "mcg/kg/min",
+                    doseRange: [5, 15],
+                    concentrations: [
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2, unit: "mg/mL" },
+                        { value: 4, unit: "mg/mL" },
+                        { value: 6, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "purple",
+                    compatibleFluids: "D5W only",
+                    precautions: "",
+                    dosageInfo: "Loading: 5mg/kg (D5W 20-100ml 희석 후 ov 20~60min) (max. 300mg/dose, 15mg/kg/day)\nCIV: 5~15mcg/kg/min"
+                }
+            ],
+            sedation: [
+                {
+                    name: "Fentanyl",
+                    unit: "mcg/kg/hr",
+                    doseRange: [1, 2],
+                    concentrations: [
+                        { value: 10, unit: "mcg/mL" },
+                        { value: 25, unit: "mcg/mL" },
+                        { value: 50, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "blue",
+                    compatibleFluids: "D5W, N/S",
+                    precautions: "차광 보관\nPantoprazole 투여시 안정성↓",
+                    dosageInfo: "IV bolus: 0.5~2mcg/kg\nCIV: 1~2mcg/kg/hr(25~200mcg/hr)"
+                },
+                {
+                    name: "Midazolam (Sedation)",
+                    unit: "mg/kg/hr",
+                    doseRange: [0.06, 0.12],
+                    concentrations: [
+                        { value: 0.5, unit: "mg/mL" },
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "blue",
+                    compatibleFluids: "D5W, N/S",
+                    precautions: "Heparin, pantoprazol과 금지",
+                    dosageInfo: "(Sedation) loading 0.05~0.2mg/kg, CIV 0.06~0.12mg/kg/hr"
+                },
+                {
+                    name: "Midazolam (Status epilepticus)",
+                    unit: "mg/kg/hr",
+                    doseRange: [0.05, 2],
+                    concentrations: [
+                        { value: 0.5, unit: "mg/mL" },
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "blue",
+                    compatibleFluids: "D5W, N/S",
+                    precautions: "Heparin, pantoprazol과 금지",
+                    dosageInfo: "(Status epilepticus) loading 0.2mg/kg, CIV 0.05~2mg/kg/hr (max. 10mcg/kg/min)"
+                },
+                {
+                    name: "Propofol (ICU Sedation)",
+                    unit: "mg/kg/hr",
+                    doseRange: [1, 4],
+                    concentrations: [
+                        { value: 2, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" },
+                        { value: 10, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "",
+                    compatibleFluids: "D5W",
+                    precautions: "차광 보관\n단독 투여\n12시간마다 약물, 라인 교체",
+                    dosageInfo: "(ICU sedation) loading: 0.5~1mg/kg, CIV: 1~4mg/kg/hr (16세 이하 소아 안전성 없음)"
+                },
+                {
+                    name: "Propofol (Status epilepticus)",
+                    unit: "mg/kg/hr",
+                    doseRange: [1.8, 12],
+                    concentrations: [
+                        { value: 2, unit: "mg/mL" },
+                        { value: 5, unit: "mg/mL" },
+                        { value: 10, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "",
+                    compatibleFluids: "D5W",
+                    precautions: "차광 보관\n단독 투여\n12시간마다 약물, 라인 교체",
+                    dosageInfo: "(Status epilepticus) loading: 1~2mg/kg, CIV: 1.8~12mg/kg/hr"
+                },
+                {
+                    name: "Morphine",
+                    unit: "mg/kg/hr",
+                    doseRange: [0.02, 2.6],
+                    concentrations: [
+                        { value: 0.1, unit: "mg/mL" },
+                        { value: 0.5, unit: "mg/mL" },
+                        { value: 1, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "blue",
+                    compatibleFluids: "WFI, D5W, N/S",
+                    precautions: "",
+                    dosageInfo: "IV,IM: (>1mon) 0.05~0.2mg/kg (max.15mg), (Neonate) 0.05mg/kg (max. 0.1mg/kg)\nCIV: (>1mon) 0.02mg~2.6mg/kg/hr, (Neonate) 0.01~0.03mg/kg/hr"
+                },
+                {
+                    name: "Ketamine",
+                    unit: "mcg/kg/min",
+                    doseRange: [5, 20],
+                    concentrations: [
+                        { value: 1, unit: "mg/mL" },
+                        { value: 2, unit: "mg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "blue",
+                    compatibleFluids: "D5W, N/S",
+                    precautions: "냉장, 차광 보관\nDiazepam, morphine과 투여 금지",
+                    dosageInfo: "IV bolus: 0.5~2mg/kg\nIM: 3~7mg/kg\nCIV: 5~20mcg/kg/min"
+                },
+                {
+                    name: "Precedex (Dexmedetomidine)",
+                    unit: "mcg/kg/hr",
+                    doseRange: [0.5, 1.5],
+                    concentrations: [
+                        { value: 4, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 1,
+                    color: "blue",
+                    compatibleFluids: "N/S, D5W",
+                    precautions: "Ceftriaxone과 투여 시 불안정",
+                    dosageInfo: "loading: 1.5~2mcg/kg(ov10~20min)\nCIV: 0.5~1.5mcg/kg/hr"
+                },
+                {
+                    name: "Remifentanyl",
+                    unit: "mcg/kg/min",
+                    doseRange: [0.05, 0.5],
+                    concentrations: [
+                        { value: 20, unit: "mcg/mL" },
+                        { value: 50, unit: "mcg/mL" },
+                        { value: 100, unit: "mcg/mL" },
+                        { value: 250, unit: "mcg/mL" }
+                    ],
+                    conversionFactor: 60,
+                    color: "blue",
+                    compatibleFluids: "WFI, D5W, N/S",
+                    precautions: "혈액제제와 병용 금지",
+                    dosageInfo: "IV bolus: 0.4~1mcg/kg\nCIV: 0.05~0.5mcg/kg/min"
+                }
+            ]
+        };
+
+        let currentDrugData = JSON.parse(localStorage.getItem('picuDrugData')) || defaultDrugData;
+        let selectedDrug = { cardiovascular: null, sedation: null };
+
+        function init() {
+            renderDrugs('cardiovascular');
+            renderDrugs('sedation');
+            updateSettingsEditor();
+            
+            document.getElementById('cardiovascular-dose').addEventListener('input', () => autoCalculate('cardiovascular'));
+            document.getElementById('cardiovascular-weight').addEventListener('input', () => autoCalculate('cardiovascular'));
+            document.getElementById('sedation-dose').addEventListener('input', () => autoCalculate('sedation'));
+            document.getElementById('sedation-weight').addEventListener('input', () => autoCalculate('sedation'));
+        }
+
+        function formatNumber(num) {
+            num = Math.round(num * 100) / 100;
+            if (num % 1 === 0) {
+                return num.toFixed(0);
+            } else if ((num * 10) % 1 === 0) {
+                return num.toFixed(1);
+            } else {
+                return num.toFixed(2);
+            }
+        }
+
+        function renderDrugs(category) {
+            const select = document.getElementById(`${category}-select`);
+            select.innerHTML = '<option value="">약물을 선택하세요</option>';
+            
+            currentDrugData[category].forEach((drug, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${drug.name} (${drug.doseRange[0]}~${drug.doseRange[1]} ${drug.unit})`;
+                select.appendChild(option);
+            });
+        }
+
+        function selectDrugFromDropdown(category) {
+            const select = document.getElementById(`${category}-select`);
+            const index = select.value;
+            
+            if (index === '') {
+                selectedDrug[category] = null;
+                document.getElementById(`${category}-info`).classList.remove('active');
+                document.getElementById(`${category}-unit`).textContent = '단위';
+                document.getElementById(`${category}-dose`).value = '';
+                autoCalculate(category);
+                return;
+            }
+            
+            selectDrug(category, parseInt(index));
+        }
+
+        function selectDrug(category, index) {
+            selectedDrug[category] = currentDrugData[category][index];
+            const drug = selectedDrug[category];
+            const infoDiv = document.getElementById(`${category}-info`);
+            
+            infoDiv.className = 'selected-drug-info active';
+            if (drug.color) {
+                infoDiv.classList.add(`color-${drug.color}`);
+            }
+            
+            infoDiv.innerHTML = `
+                <h4>${drug.name}</h4>
+                <p><strong>일반용량:</strong> ${drug.doseRange[0]}~${drug.doseRange[1]} ${drug.unit}</p>
+            `;
+            
+            document.getElementById(`${category}-unit`).textContent = drug.unit;
+            document.getElementById(`${category}-dose`).value = '';
+            
+            document.getElementById(`${category}-results`).innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12h6m-3-3v6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p>체중과 용량을 입력하면<br>계산 결과가 표시됩니다</p>
+                </div>
+            `;
+            document.getElementById(`${category}-results`).classList.remove('active');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            document.getElementById(`${tabName}-content`).style.display = 'block';
+        }
+
+        function autoCalculate(category) {
+            const weight = parseFloat(document.getElementById(`${category}-weight`).value);
+            const dose = parseFloat(document.getElementById(`${category}-dose`).value);
+            
+            if (!selectedDrug[category]) {
+                document.getElementById(`${category}-results`).innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-3-3v6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>먼저 약물을 선택해주세요</p>
+                    </div>
+                `;
+                document.getElementById(`${category}-results`).classList.remove('active');
+                return;
+            }
+            
+            if (!weight || weight <= 0 || !dose || dose <= 0) {
+                document.getElementById(`${category}-results`).innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-3-3v6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>체중과 용량을 입력하면<br>계산 결과가 표시됩니다</p>
+                    </div>
+                `;
+                document.getElementById(`${category}-results`).classList.remove('active');
+                return;
+            }
+            
+            const drug = selectedDrug[category];
+            
+            if (dose < drug.doseRange[0] || dose > drug.doseRange[1]) {
+                alert('⚠️ 용량이 너무 많습니다. 다시 확인해주세요.\n\n일반용량 범위: ' + drug.doseRange[0] + '~' + drug.doseRange[1] + ' ' + drug.unit);
+                document.getElementById(`${category}-dose`).value = '';
+                return;
+            }
+            
+            const totalDosePerHour = dose * weight * drug.conversionFactor;
+            
+            const results = drug.concentrations.map(conc => {
+                const rate = totalDosePerHour / conc.value;
+                return {
+                    concentration: conc.value,
+                    unit: conc.unit,
+                    rate: rate,
+                    status: getStatus(rate, weight)
+                };
+            });
+            
+            const tooFast = results.some(r => r.rate >= 100);
+            if (tooFast) {
+                alert('⚠️ 계산된 속도가 100cc/hr 이상입니다. 용량을 다시 확인해주세요.');
+                return;
+            }
+            
+            const recommended = findRecommendedConcentration(results, weight);
+            displayResults(category, results, recommended, drug);
+        }
+
+        function getStatus(rate, weight) {
+            const minRate = 1.0;
+            return rate < minRate ? 'slow' : 'ok';
+        }
+
+        function findRecommendedConcentration(results, weight) {
+            const minRate = 1.0;
+            const acceptable = results.filter(r => r.rate >= minRate);
+            
+            if (acceptable.length === 0) return null;
+            
+            let recommended = acceptable[0];
+            let minDiff = Math.abs(acceptable[0].rate - 1.25);
+            
+            acceptable.forEach(result => {
+                const diff = Math.abs(result.rate - 1.25);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    recommended = result;
+                }
+            });
+            
+            return recommended;
+        }
+
+        function displayResults(category, results, recommended, drug) {
+            const container = document.getElementById(`${category}-results`);
+            const weight = parseFloat(document.getElementById(`${category}-weight`).value);
+            const dose = parseFloat(document.getElementById(`${category}-dose`).value);
+            
+            let html = `
+                <div class="results-header">
+                    ${drug.name}
+                </div>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>농도</th>
+                            <th>주입 속도</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            results.forEach(result => {
+                const isRecommended = recommended && result.concentration === recommended.concentration;
+                const rowClass = isRecommended ? 'recommended' : (result.status === 'slow' ? 'warning' : '');
+                
+                let statusText = result.status === 'slow' ? '⚠️ 너무 느림 (<1cc/hr)' : '✓ 적정 범위';
+                
+                html += `
+                    <tr class="${rowClass}">
+                        <td><strong>${formatNumber(result.concentration)} ${result.unit}</strong></td>
+                        <td><strong>${formatNumber(result.rate)} cc/hr</strong></td>
+                        <td>
+                            ${statusText}
+                            ${isRecommended ? '<span class="recommended-badge">추천</span>' : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `</tbody></table>
+                <div class="info-box">
+                    <strong>계산 정보</strong><br>
+                    환자 체중: ${weight} kg<br>
+                    처방 용량: ${dose} ${drug.unit}`;
+            
+            if (drug.compatibleFluids) {
+                html += `<br><br><strong>희석 가능 수액:</strong> ${drug.compatibleFluids}`;
+            }
+            
+            html += `</div>`;
+            
+            if (drug.precautions) {
+                html += `
+                    <div class="info-box" style="background: #fff3cd;">
+                        <strong>⚠️ 주의사항</strong><br>
+                        ${drug.precautions.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+            
+            if (drug.dosageInfo) {
+                html += `
+                    <div class="info-box" style="background: #f3e5f5;">
+                        <strong>📖 참고 (용량 및 투여방법)</strong><br>
+                        ${drug.dosageInfo.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+            container.classList.add('active');
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('admin-password').value;
+            if (input === ADMIN_PASSWORD) {
+                document.getElementById('password-section').classList.add('hidden');
+                document.getElementById('editor-section').classList.remove('hidden');
+            } else {
+                alert('❌ 비밀번호가 올바르지 않습니다.');
+                document.getElementById('admin-password').value = '';
+            }
+        }
+
+        function updateSettingsEditor() {
+            document.getElementById('drug-data-editor').value = JSON.stringify(currentDrugData, null, 2);
+        }
+
+        function saveDrugData() {
+            try {
+                const newData = JSON.parse(document.getElementById('drug-data-editor').value);
+                
+                if (!newData.cardiovascular || !newData.sedation) {
+                    throw new Error('cardiovascular 및 sedation 카테고리가 필요합니다.');
+                }
+                
+                currentDrugData = newData;
+                localStorage.setItem('picuDrugData', JSON.stringify(currentDrugData));
+                
+                renderDrugs('cardiovascular');
+                renderDrugs('sedation');
+                selectedDrug = { cardiovascular: null, sedation: null };
+                
+                document.getElementById('cardiovascular-select').value = '';
+                document.getElementById('sedation-select').value = '';
+                document.getElementById('cardiovascular-info').classList.remove('active');
+                document.getElementById('sedation-info').classList.remove('active');
+                
+                alert('✅ 약물 데이터가 저장되었습니다!');
+            } catch (error) {
+                alert('❌ 오류: ' + error.message + '\n\nJSON 형식이 올바른지 확인해주세요.');
+            }
+        }
+
+        function resetDrugData() {
+            if (confirm('정말 초기 데이터로 되돌리시겠습니까?')) {
+                currentDrugData = JSON.parse(JSON.stringify(defaultDrugData));
+                localStorage.setItem('picuDrugData', JSON.stringify(currentDrugData));
+                updateSettingsEditor();
+                renderDrugs('cardiovascular');
+                renderDrugs('sedation');
+                selectedDrug = { cardiovascular: null, sedation: null };
+                
+                document.getElementById('cardiovascular-select').value = '';
+                document.getElementById('sedation-select').value = '';
+                document.getElementById('cardiovascular-info').classList.remove('active');
+                document.getElementById('sedation-info').classList.remove('active');
+                
+                alert('✅ 초기 데이터로 복원되었습니다!');
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(currentDrugData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'picu_drug_data.json';
+            link.click();
+        }
+
+        init();
+    </script>
+</body>
+</html>
